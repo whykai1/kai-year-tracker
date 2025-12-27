@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>kai year tracker</h1>
+            <p>tappy tappy tappy</p>
+        </header>
+
+        <div id="counter-list">
+            <div class="counter-card" data-id="gym">
+                <div class="info">
+                    <h2>Gym Sessions</h2>
+                    <span class="count" id="count-gym">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn minus" onclick="updateCounter('gym', -1)">-</button>
+                    <button class="btn plus" onclick="updateCounter('gym', 1)">+</button>
+                </div>
+            </div>
+
+            <div class="counter-card" data-id="pub">
+                <div class="info">
+                    <h2>Pub Trips</h2>
+                    <span class="count" id="count-pub">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn minus" onclick="updateCounter('pub', -1)">-</button>
+                    <button class="btn plus" onclick="updateCounter('pub', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <button class="reset-btn" onclick="resetAll()">Reset All Data</button>
+    </div>
+
+    <script>
+        // Load counts from LocalStorage on startup
+        window.onload = () => {
+            const categories = ['gym', 'pub'];
+            categories.forEach(cat => {
+                const savedValue = localStorage.getItem(cat) || 0;
+                document.getElementById(`count-${cat}`).innerText = savedValue;
+            });
+        };
+
+        function updateCounter(id, change) {
+            const display = document.getElementById(`count-${id}`);
+            let current = parseInt(display.innerText);
+            let newValue = current + change;
+            
+            if (newValue < 0) newValue = 0; // Prevent negative counts
+
+            display.innerText = newValue;
+            localStorage.setItem(id, newValue);
+        }
+
+        function resetAll() {
+            if(confirm("Are you sure you want to reset everything?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
