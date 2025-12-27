@@ -36,6 +36,17 @@
                     <button class="btn plus" onclick="updateCounter('pub', 1)">+</button>
                 </div>
             </div>
+
+            <div class="counter-card" data-id="food">
+                <div class="info">
+                    <h2>meals out</h2>
+                    <span class="count" id="count-food">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn minus" onclick="updateCounter('pub', -1)">-</button>
+                    <button class="btn plus" onclick="updateCounter('pub', 1)">+</button>
+                </div>
+            </div>
         </div>
 
         <button class="reset-btn" onclick="resetAll()">Reset All Data</button>
@@ -44,7 +55,7 @@
     <script>
         // Load counts from LocalStorage on startup
         window.onload = () => {
-            const categories = ['gym', 'pub'];
+            const categories = ['gym', 'pub', 'food'];
             categories.forEach(cat => {
                 const savedValue = localStorage.getItem(cat) || 0;
                 document.getElementById(`count-${cat}`).innerText = savedValue;
