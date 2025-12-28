@@ -1,5 +1,5 @@
 // 1. List your categories here. You can add more easily!
-const categories = ['Gym Sessions', 'Pub Trips', 'Meals Out'];
+const categories = ['Gym Sessions', 'Pub Trips', 'Meals Out', 'cuddles w/ izzy'];
 
 const listContainer = document.getElementById('tracker-list');
 
