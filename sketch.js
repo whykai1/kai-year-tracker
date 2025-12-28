@@ -1,24 +1,32 @@
-// 1. List your categories here. You can add more easily!
-const categories = ['Gym Sessions', 'Pub Trips', 'Meals Out', 'cuddles w/ izzy'];
+/* sketch.js */
+
+// 1. ADD YOUR NEW CATEGORIES HERE
+const defaultCategories = ['Gym Sessions', 'Pub Trips', 'Meals Out', 'Cinema', 'New Category'];
+
+// 2. LOAD DATA (and merge with defaults)
+let savedData = JSON.parse(localStorage.getItem('kaiTracker')) || {};
+
+// Ensure every category in our list exists in the data object
+defaultCategories.forEach(cat => {
+    if (savedData[cat] === undefined) {
+        savedData[cat] = 0;
+    }
+});
 
 const listContainer = document.getElementById('tracker-list');
 
-/**
- * Renders the counter cards onto the screen
- */
+// 3. THE RENDER FUNCTION (The "Draw")
 function render() {
     listContainer.innerHTML = ''; 
     
-    categories.forEach(name => {
-        // Get saved value from phone memory
-        const savedValue = localStorage.getItem(name) || 0;
-
+    // We loop through the data and create the cards
+    for (const [name, value] of Object.entries(savedData)) {
         const card = document.createElement('div');
         card.className = 'counter-card';
         card.innerHTML = `
             <div>
                 <span class="label">${name}</span>
-                <span class="count">${savedValue}</span>
+                <span class="count">${value}</span>
             </div>
             <div class="controls">
                 <button class="btn minus" onclick="update('${name}', -1)">−</button>
@@ -26,29 +34,24 @@ function render() {
             </div>
         `;
         listContainer.appendChild(card);
-    });
+    }
+    
+    // Save to browser memory
+    localStorage.setItem('kaiTracker', JSON.stringify(savedData));
 }
 
-/**
- * Updates the count and saves it to LocalStorage
- */
+// 4. THE UPDATE FUNCTION
 function update(name, change) {
-    let current = parseInt(localStorage.getItem(name)) || 0;
-    let newValue = Math.max(0, current + change); // Prevents negative numbers
-
-    localStorage.setItem(name, newValue);
-    render(); // Redraw the UI
+    savedData[name] = Math.max(0, savedData[name] + change);
+    render();
 }
 
-/**
- * Clears all data from the phone
- */
 function resetAll() {
-    if(confirm("Are you sure you want to reset everything?")) {
+    if(confirm("Wipe all data?")) {
         localStorage.clear();
-        render();
+        location.reload(); // This clears the memory and restarts
     }
 }
 
-// Start the app for the first time
+// Initial "Setup"
 render();
