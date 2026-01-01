@@ -1,7 +1,7 @@
 /* sketch.js */
 
 // 1. ADD YOUR NEW CATEGORIES HERE
-const defaultCategories = ['Gym Sessions', 'Pub Trips', 'Meals Out', 'Cinema', 'nights out', 'pints', 'friends seen', 'holidays', 'coffees', ];
+const defaultCategories = ['Gym Sessions', 'Pub Trips', 'Meals Out', 'Cinema', 'nights out', 'pints', 'friends seen', 'holidays', 'coffees', 'norwich', 'clothes bought', 'things sold', 'friends made', 'dj sets',  ];
 
 // 2. LOAD DATA (and merge with defaults)
 let savedData = JSON.parse(localStorage.getItem('kaiTracker')) || {};
